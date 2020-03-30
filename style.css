@@ -1,0 +1,20 @@
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+}
+
+table,
+td,
+th {
+    padding: 5px;
+    border-bottom: 1px solid #aaa;
+}
+
