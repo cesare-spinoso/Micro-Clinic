@@ -14,7 +14,8 @@ $output = produceHtmlTable($query);
 
 include "headerMain.php";
 ?>
-    <h1>List of Clincs</h1>
+    <h1>List of Clinics</h1>
 <?php echo $output; ?>
     <a href="admin.php">Back to admin's page.</a>
 <?php include "footerMain.php"; ?>
+

@@ -15,6 +15,7 @@ $output = produceHtmlTable($query);
 include "headerMain.php";
 ?>
     <h1>List of Appointments</h1>
+Note an empty space means no dentist is
 <?php echo $output; ?>
     <a href="admin.php">Back to admin's page.</a>
 <?php include "footerMain.php"; ?>

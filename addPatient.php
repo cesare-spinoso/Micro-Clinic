@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
     foreach ($submit_arr as $key => $value) {
         if ($key == "fName" || $key == "lName") {
             if(!$isempty_arr[$key]) {
-                if (!preg_match('/[a-zA-Z]+/', $_POST[$key])) {
+                if (!preg_match('/^[a-zA-Z]+$/', $_POST[$key])) {
                     $err_arr[$key] = "Invalid format. Enter a string of alphabetical characters only.";
                     $no_format_err = false;
                 }
@@ -29,7 +29,7 @@ if (isset($_POST["submit"])) {
             }
         }
         if ($key == "hin") {
-            if (!$isempty_arr[$key] && !preg_match('/[a-zA-Z]+\d+/', $_POST[$key])) {
+            if (!$isempty_arr[$key] && !preg_match('/^[a-zA-Z]+\d+$/', $_POST[$key])) {
                 $err_arr[$key] = "Invalid format. Enter characters then numbers.";
                 $no_format_err = false;
             }
@@ -38,7 +38,7 @@ if (isset($_POST["submit"])) {
             }
         }
         if ($key == "phoneNumber") {
-            if (!$isempty_arr[$key] && !preg_match('/\d{3}-\d{3}-\d{4}/', $_POST[$key])) {
+            if (!$isempty_arr[$key] && !preg_match('/^\d{3}-\d{3}-\d{4}$/', $_POST[$key])) {
                 $err_arr[$key] = "Invalid format. Enter characters then numbers.";
                 $no_format_err = false;
             }
@@ -47,7 +47,7 @@ if (isset($_POST["submit"])) {
             }
         }
         if ($key == "address") {
-            if (!$isempty_arr[$key] && !preg_match('/\d+\s+[a-zA-Z]+\s+[a-zA-Z]+/', $_POST[$key])) {
+            if (!$isempty_arr[$key] && !preg_match('/^\d+\s+[a-zA-Z]+\s+[a-zA-Z]+$/', $_POST[$key])) {
                 $err_arr[$key] = "Invalid format. Enter characters then numbers.";
                 $no_format_err = false;
             }
@@ -96,6 +96,7 @@ if (isset($_POST["submit"])) {
 <span class="success"><?php echo "$succ_msg"; ?></span>
 <span class="error"><?php echo "$err_msg"; ?></span>
 <form method="post">
+    <fieldset>
     <label for="hin">Health Insurance Number (HIN):
         <input type="text" name="hin" id="hin" placeholder="JOHN12345">
         <span class="error"><?php echo $err_arr["hin"] ?></span>
@@ -106,13 +107,14 @@ if (isset($_POST["submit"])) {
     <label for="lName">Last Name: <input type="text" name="lName" id="lName" placeholder="Doe">
         <span class="error"><?php echo $err_arr["lName"] ?></span>
     </label>
-    <label for="address">Studio name:<input type="text" name="address" id="address" placeholder="123 Dream street">
+    <label for="address">Address: <input type="text" name="address" id="address" placeholder="123 Dream street">
         <span class="error"><?php echo $err_arr["address"] ?></span>
     </label>
-    <label for="phoneNumber">Studio name:<input type="text" name="phoneNumber" id="phoneNumber"
+    <label for="phoneNumber">Phone Number: <input type="text" name="phoneNumber" id="phoneNumber"
                                                 placeholder="123-456-7890">
         <span class="error"><?php echo $err_arr["phoneNumber"] ?></span>
     </label>
+    </fieldset>
     <input type="submit" name="submit" value="SUBMIT">
 </form>
 <a href="homeMain.php">Go home.</a>

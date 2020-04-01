@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
     foreach ($submit_arr as $key => $value) {
         if ($key == "fName" || $key == "lName") {
             if (!$isempty_arr[$key]) {
-                if (!preg_match('/[a-zA-Z]+/', $_POST[$key])) {
+                if (!preg_match('/^[a-zA-Z]+$/', $_POST[$key])) {
                     $err_arr[$key] = "Invalid format. Enter a string of alphabetical characters only.";
                     $no_format_err = false;
                 } else {
@@ -28,7 +28,7 @@ if (isset($_POST["submit"])) {
             }
         }
         if ($key == "sin") {
-            if (!$isempty_arr[$key] && !preg_match('/\d+/', $_POST[$key])) {
+            if (!$isempty_arr[$key] && !preg_match('/^\d+$/', $_POST[$key])) {
                 $err_arr[$key] = "Invalid format. Enter characters then numbers.";
                 $no_format_err = false;
             } else {
@@ -36,7 +36,7 @@ if (isset($_POST["submit"])) {
             }
         }
         if ($key == "phoneExtension") {
-            if (!$isempty_arr[$key] && !preg_match('/514-123-4567 ext\. \d+/', $_POST[$key])) {
+            if (!$isempty_arr[$key] && !preg_match('/^514-123-4567 ext\. \d+$/', $_POST[$key])) {
                 $err_arr[$key] = "Invalid format. Enter 514-123-4567 ext. then your ";
                 $no_format_err = false;
             } else {
@@ -89,7 +89,7 @@ if (isset($_POST["submit"])) {
 <span class="error"><?php echo "$err_msg"; ?></span>
 <form method="post">
     <fieldset>
-    <label for="hin">Social Insurance Number (HIN):
+    <label for="hin">Social Insurance Number (SIN):
         <input type="text" name="sin" id="sin" placeholder="9417">
         <span class="error"><?php echo $err_arr["sin"] ?></span>
     </label>
