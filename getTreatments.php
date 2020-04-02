@@ -2,7 +2,8 @@
 include "headerMain.php"; # This contains all the header info so don't need to repeat the same code
 include "commonMain.php"; # This contains the db info and the helper function  produceHtmlTable (see commonMain.php for documentation)
 ?>
-<!--Here no input is required. -->
+<!--Here provide the hin (alternate key for patient), and dateTime as input.
+ Make sure the year input is formatted as yyyy-mm-dd HH:MM:SS when you pass it into sql.-->
 
 <h2>Your title</h2>
 <form method="post">

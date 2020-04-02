@@ -171,7 +171,7 @@ if (isset($_POST["submit"])) {
     }
 }
 ?>
-<h2 class="error">Create an appointment --- Still in dev. please don't use :")</h2>
+<h2>Create an appointment</h2>
 <p>The assumption here is that the present day is 15-03-2020. Can only make appointments starting from then.</p>
 <span class="success"><?php echo "$succ_msg"; ?></span>
 <span class="error"><?php echo "$err_msg"; ?></span>
@@ -179,13 +179,13 @@ if (isset($_POST["submit"])) {
     <fieldset>
         <legend>Patient Info:</legend>
         <label for="hin">Health Insurance Number (HIN):
-            <input type="text" name="hin" id="hin" value="SKEE85021">
+            <input type="text" name="hin" id="hin" placeholder="SKEE85021">
             <span class="error"><?php echo $err_arr["hin"] ?></span>
         </label>
-        <label for="fName">First Name: <input type="text" name="fName" id="fName" value="Bobby">
+        <label for="fName">First Name: <input type="text" name="fName" id="fName" placeholder="Bobby">
             <span class="error"><?php echo $err_arr["fName"] ?></span>
         </label>
-        <label for="lName">Last Name: <input type="text" name="lName" id="lName" value="Skeesick">
+        <label for="lName">Last Name: <input type="text" name="lName" id="lName" placeholder="Skeesick">
             <span class="error"><?php echo $err_arr["lName"] ?></span>
         </label>
     </fieldset>

@@ -2,7 +2,10 @@
 include "headerMain.php"; # This contains all the header info so don't need to repeat the same code
 include "commonMain.php"; # This contains the db info and the helper function  produceHtmlTable (see commonMain.php for documentation)
 ?>
-<!--Here no input is required. -->
+<!--Here provide the SIN for the dentist (alternate key)/ could also do EID. I imagine it might be easier
+for a user to remember their SIN than their EID. Also provide a way of picking the week and somehow turn this into a sunday
+(of that week).
+Make sure the year input is formatted as yyyy-mm-dd HH:MM:SS when you pass it into sql.-->
 
 <h2>Your title</h2>
 <form method="post">

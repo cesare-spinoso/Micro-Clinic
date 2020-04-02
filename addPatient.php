@@ -97,6 +97,7 @@ if (isset($_POST["submit"])) {
 <span class="error"><?php echo "$err_msg"; ?></span>
 <form method="post">
     <fieldset>
+        <legend>Patient info:</legend>
     <label for="hin">Health Insurance Number (HIN):
         <input type="text" name="hin" id="hin" placeholder="JOHN12345">
         <span class="error"><?php echo $err_arr["hin"] ?></span>

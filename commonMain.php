@@ -8,6 +8,8 @@ $options = array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 );
 
+# Input: an sql query that is written as a string e.g.  "Select * from appts;"
+# Output: Connects to the server and executes the query. Takes the output and produces a standard html table.
 function produceHtmlTable($query){
     global $servername, $dbname, $username, $password, $options;
     $output = "";

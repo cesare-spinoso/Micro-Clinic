@@ -89,6 +89,7 @@ if (isset($_POST["submit"])) {
 <span class="error"><?php echo "$err_msg"; ?></span>
 <form method="post">
     <fieldset>
+        <legend>Staff info:</legend>
     <label for="hin">Social Insurance Number (SIN):
         <input type="text" name="sin" id="sin" placeholder="9417">
         <span class="error"><?php echo $err_arr["sin"] ?></span>
