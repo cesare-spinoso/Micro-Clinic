@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-//$password = "Potatoe1";
+$password = "";
 $dbname = "clinic";
 $dsn = "mysql:host=$servername;dbname=$dbname";
 $options = array(

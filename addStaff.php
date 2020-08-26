@@ -3,9 +3,9 @@ include "headerMain.php";
 include "commonMain.php";
 $no_empty_fields = true;
 $no_format_err = true;
-$submit_arr = array("sin" => "", "fName" => "", "lName" => "", "phoneExtension" => "", "role" => $_POST['role']);
+$submit_arr = array("sin" => "", "fName" => "", "lName" => "", "phoneExtension" => "", "role" => "");
 $err_arr = array("sin" => "", "fName" => "", "lName" => "", "phoneExtension" => "");
-$isempty_arr = array("sin" => false, "fname" => false, "lName" => false, "phoneExtension" => false);
+$isempty_arr = array("sin" => false, "fName" => false, "lName" => false, "phoneExtension" => false);
 $succ_msg = "";
 $err_msg = "";
 if (isset($_POST["submit"])) {
@@ -44,6 +44,7 @@ if (isset($_POST["submit"])) {
             }
         }
     }
+    $submit_arr["role"] = $_POST["role"];
     if ($no_empty_fields && $no_format_err) {
         try {
             $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password, $options);

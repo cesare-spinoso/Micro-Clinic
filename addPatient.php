@@ -4,8 +4,8 @@ include "commonMain.php";
 $no_empty_fields = true;
 $no_format_err = true;
 $submit_arr = array("hin" => "", "fName" => "", "lName" => "", "address" => "", "phoneNumber" => "");
-$err_arr = array("hin" => "", "fname" => "", "lName" => "", "address" => "", "phoneNumber" => "");
-$isempty_arr = array("hin" => false, "fname" => false, "lName" => false, "address" => false, "phoneNumber" => false);
+$err_arr = array("hin" => "", "fName" => "", "lName" => "", "address" => "", "phoneNumber" => "");
+$isempty_arr = array("hin" => false, "fName" => false, "lName" => false, "address" => false, "phoneNumber" => false);
 $succ_msg = "";
 $err_msg = "";
 if (isset($_POST["submit"])) {

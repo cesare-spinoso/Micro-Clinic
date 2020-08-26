@@ -5,7 +5,7 @@ session_start();
 # if you want to erase global variables use session_unset();
 # If the logged in user comes back to home page redirect them
 if(isset($_SESSION["signedin"]) && $_SESSION["signedin"] === true){
-    header("location: https://mvc353.encs.concordia.ca/mainProject/admin.php");
+    header("location: https://localhost/clinic/admin.php");
     exit;
 }
 $err_msg = "";
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
                 if ($row[0] == $usernameIn && $row[1] == $passwordIn) {
                     session_start();
                     $_SESSION["signedin"] = true;
-                    header("location: https://mvc353.encs.concordia.ca/mainProject/admin.php");
+                    header("location: https://localhost/clinic/admin.php");
                 }
             }
             if (!isset($_SESSION["signedin"]) || $_SESSION !== true) {

@@ -2,11 +2,11 @@
 include "headerMain.php";
 include "commonMain.php";
 # general variables
-$result_explode = explode('---', $result);
+# $result_explode = explode('---', $result);
 $current_date = new DateTime('2020-03-15 09:00:00');
 $no_empty_fields = true;
 $no_format_err = true;
-$submit_arr = array("hin" => "", "fName" => "", "lName" => "", "date" => $_POST['date'], "time" => $_POST['time']);
+$submit_arr = array("hin" => "", "fName" => "", "lName" => "", "date" => "", "time" => "");
 $err_arr = array("hin" => "", "fName" => "", "lName" => "", "date" => "", "time" => "");
 $isempty_arr = array("hin" => false, "fname" => false, "lName" => false, "date" => false, "time" => false);
 $succ_msg = "";
@@ -19,6 +19,8 @@ if (isset($_POST["submit"])) {
             $isempty_arr[$key] = true;
         }
     }
+    $submit_arr["date"] = $_POST['date'];
+    $submit_arr["time"] = $_POST['time'];
     foreach ($submit_arr as $key => $value) {
         if ($key == "fName" || $key == "lName") {
             if (!$isempty_arr[$key]) {

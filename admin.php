@@ -4,7 +4,7 @@ include "commonMain.php";
 session_start();
 
 if (!isset($_SESSION["signedin"]) || $_SESSION["signedin"] !== true) {
-    header("location:https://mvc353.encs.concordia.ca/mainProject/adminHome.php");
+    header("location:https://localhost/clinic/adminHome.php");
     exit;
 }
 

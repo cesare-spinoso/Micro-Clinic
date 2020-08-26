@@ -15,15 +15,13 @@ try {
     print_r("In here unfortunately");
     print_r($e->getMessage());
 }
-# process the input of clinic, this allows to return both the cname and address at the same time
-$result = $_POST['clinic'];
-$result_explode = explode('---', $result);
+
 # general variables
 $current_date = new DateTime('2020-03-15 09:00:00');
 $no_empty_fields = true;
 $no_format_err = true;
-$submit_arr = array("hin" => "", "fName" => "", "lName" => "", "cname" => trim($result_explode[0]),
-    "address" => trim($result_explode[1]), "date" => $_POST['date'], "time" => $_POST['time']);
+$submit_arr = array("hin" => "", "fName" => "", "lName" => "", "cname" => "",
+    "address" => "", "date" => "", "time" => "");
 $err_arr = array("hin" => "", "fName" => "", "lName" => "", "date" => "", "time" => "");
 $isempty_arr = array("sin" => false, "fname" => false, "lName" => false, "date" => false, "time" => false);
 $succ_msg = "";
@@ -36,6 +34,16 @@ if (isset($_POST["submit"])) {
             $isempty_arr[$key] = true;
         }
     }
+    # process the input of clinic, this allows to return both the cname and address at the same time
+    $result = $_POST['clinic'];
+    $result_explode = explode('---', $result);
+
+    # this will throw an error if clinic or data are empty
+    $submit_arr["cname"] = trim($result_explode[0]);
+    $submit_arr["address"] = trim($result_explode[1]);
+    $submit_arr["date"] = $_POST['date'];
+    $submit_arr["time"] = $_POST['time'];
+
     foreach ($submit_arr as $key => $value) {
         if ($key == "fName" || $key == "lName") {
             if (!$isempty_arr[$key]) {
