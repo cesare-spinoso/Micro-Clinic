@@ -1,7 +1,7 @@
 <?php
 include "headerMain.php";
 ?>
-<h1>Comp 353 - Main</h1>
+<h1>Micro-Clinic Database</h1>
 <h2>What do you want to do?</h2>
 <h3>Query the database</h3>
 <ul>
