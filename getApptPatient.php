@@ -4,24 +4,31 @@ include "commonMain.php"; # This contains the db info and the helper function  p
 ?>
 <!--Here provide the hin maybe fName and lName.-->
 
-<h2>Your title</h2>
+<h2>Query d : Get details of all appointments of a given patient</h2>
 <form method="post">
     <fieldset>
         <legend>Patient info:</legend>
         <label for="hin">Health Insurance Number (HIN):
             <input type="text" name="hin" id="hin" placeholder="JOHN12345">
         </label>
-        <label for="fName">First Name: <input type="text" name="fName" id="fName" placeholder="John">
-        </label>
-        <label for="lName">Last Name: <input type="text" name="lName" id="lName" placeholder="Doe">
-        </label>
-        <label for="address">Address: <input type="text" name="address" id="address" placeholder="123 Dream street">
-        </label>
-        <label for="phoneNumber">Phone Number: <input type="text" name="phoneNumber" id="phoneNumber"
-                                                      placeholder="123-456-7890">
-        </label>
     </fieldset>
-    <input type="submit" name="submit" value="SUBMIT">
+    <input type="submit" name="submit" value="Search">
 </form>
+
+<?php
+if(isset($_POST['submit'])){
+    $hin = $_POST['hin'];
+
+    $query = "select appointments.*
+from patients, appointments
+where patients.pid = appointments.pid and
+      patients.hin = '$hin'  ";
+
+    $output = produceHtmlTable($query);
+
+    echo '<br><h3>Appointments:</h3>';
+    echo $output;
+}
+?>
 <a href="homeMain.php">Go home.</a>
 <?php include "footerMain.php"; ?>

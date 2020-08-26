@@ -2,27 +2,20 @@
 include "headerMain.php"; # This contains all the header info so don't need to repeat the same code
 include "commonMain.php"; # This contains the db info and the helper function  produceHtmlTable (see commonMain.php for documentation)
 ?>
-<!--No input is required here.
- Make sure the year input is formatted as yyyy-mm-dd HH:MM:SS when you pass it into sql.-->
 
-<h2>Your title</h2>
-<form method="post">
-    <fieldset>
-        <legend>Patient info:</legend>
-        <label for="hin">Health Insurance Number (HIN):
-            <input type="text" name="hin" id="hin" placeholder="JOHN12345">
-        </label>
-        <label for="fName">First Name: <input type="text" name="fName" id="fName" placeholder="John">
-        </label>
-        <label for="lName">Last Name: <input type="text" name="lName" id="lName" placeholder="Doe">
-        </label>
-        <label for="address">Address: <input type="text" name="address" id="address" placeholder="123 Dream street">
-        </label>
-        <label for="phoneNumber">Phone Number: <input type="text" name="phoneNumber" id="phoneNumber"
-                                                      placeholder="123-456-7890">
-        </label>
-    </fieldset>
-    <input type="submit" name="submit" value="SUBMIT">
-</form>
+<h2>Query e: Get the number of missed appointments for each patient</h2>
+<?php
+$query = "select patients.pid, patients.fName, patients.lName, count(*), 'missed appointment(s)' as missed
+from appointments, patients
+where appointments.pid = patients.pid and appointments.status = 'missed'
+group by patients.pid";
+
+$output = produceHtmlTable($query);
+if($output){
+echo '<h3>Missed Appointments:</h3>';
+echo $output;
+}
+?>
+
 <a href="homeMain.php">Go home.</a>
 <?php include "footerMain.php"; ?>

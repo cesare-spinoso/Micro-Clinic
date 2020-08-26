@@ -58,16 +58,16 @@ if (isset($_POST["submit"])) {
         $dateTime = $submit_arr['date'] . ' ' . $submit_arr['time'];
         $asDate = new DateTime($dateTime);
         $dateTime .= ':00';
-        if($key == "date"){
-            if(!$isempty_arr[$key]){
-                if($asDate < $current_date){
+        if ($key == "date") {
+            if (!$isempty_arr[$key]) {
+                if ($asDate < $current_date) {
                     $err_arr[$key] = "Invalid date. Pick a date starting from March 15th 2020.";
                 }
             }
         }
-        if($key == "time"){
-            if(!$isempty_arr[$key]){
-                if(!preg_match('/\d{4}-\d{2}-\d{2} (09|10|11|12|13|14|15|16):00:00/', $dateTime)){
+        if ($key == "time") {
+            if (!$isempty_arr[$key]) {
+                if (!preg_match('/\d{4}-\d{2}-\d{2} (09|10|11|12|13|14|15|16):00:00/', $dateTime)) {
                     $err_arr[$key] = "Invalid time. Appointments can only be made from 9AM to 4PM. Every hour.";
                 }
             }
@@ -81,10 +81,9 @@ if (isset($_POST["submit"])) {
             $select = $connection->prepare($sql);
             $select->execute();
             $num_rows = $select->rowCount();
-            if($num_rows == 0){
+            if ($num_rows == 0) {
                 $err_msg = "Could not find your Health Insurance Number!";
-            }
-            else{
+            } else {
                 $row = $select->fetch(PDO::FETCH_NUM);
                 $pid = $row[0];
 
@@ -97,70 +96,78 @@ if (isset($_POST["submit"])) {
                 $select = $connection->prepare($sql);
                 $select->execute();
                 $row = $select->fetch(PDO::FETCH_NUM);
-                if($select->rowCount() > 0){
+                if ($select->rowCount() > 0) {
                     $err_msg = "Time slot already booked! Please try another time.";
-                }
-                else{
-                    srand(123); # random seed
-                    $recepFName = "";
-                    $recepLName = "";
-                    $recepEID = 0;
-                    $dentistFName = "TBA";
-                    $dentistLName = "TBA";
-                    $dentistEID = "NULL";
-                    # Assign this receptionist and a dentist, to do this need the list of receptionists and dentists that work there
-                    $sqlReceptionist = "select staffs.eid as eid, staffs.fName as fName, staffs.lName as lName 
+                } # Check if you are booking an appointment at a time where you already have one (primary key constraint)
+                else {
+                    $sql = "select * 
+                    from appointments
+                    where appointments.pid = {$pid} and
+                    appointments.dateAndTime = '{$dateTime}';";
+                    $select = $connection->prepare($sql);
+                    $select->execute();
+                    if ($select->rowCount() > 0) {
+                        $err_msg = "You already have an appointment booked at this time. No double booking allowed!!";
+                    } else {
+//                        srand(123); # random seed
+                        $recepFName = "";
+                        $recepLName = "";
+                        $recepEID = 0;
+                        $dentistFName = "TBA";
+                        $dentistLName = "TBA";
+                        $dentistEID = "NULL";
+                        # Assign this receptionist and a dentist, to do this need the list of receptionists and dentists that work there
+                        $sqlReceptionist = "select staffs.eid as eid, staffs.fName as fName, staffs.lName as lName 
                     from staffs, receptionists, worksIn
                     where staffs.eid = receptionists.eid and 
                     staffs.eid = worksIn.eid and
                     worksIn.cname = '{$submit_arr['cname']}' and
                     worksIn.address = '{$submit_arr['address']}';";
 
-                    $select = $connection->prepare($sqlReceptionist);
-                    $select->execute();
-                    $recep = array();
-                    while($row = $select->fetch(PDO::FETCH_ASSOC)){
-                        $recep[] = array('eid' => $row['eid'], 'fName' => $row['fName'], 'lName' => $row['lName']);
-                    }
-                    $recepRand = $recep[array_rand($recep)];
-                    $recepFName = $recepRand['fName'];
-                    $recepLName = $recepRand['lName'];
-                    $recepEID = $recepRand['eid'];
+                        $select = $connection->prepare($sqlReceptionist);
+                        $select->execute();
+                        $recep = array();
+                        while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                            $recep[] = array('eid' => $row['eid'], 'fName' => $row['fName'], 'lName' => $row['lName']);
+                        }
+                        $recepRand = $recep[array_rand($recep)];
+                        $recepFName = $recepRand['fName'];
+                        $recepLName = $recepRand['lName'];
+                        $recepEID = $recepRand['eid'];
 //                    print_r($recepRand);
 
-                    $sqlDentist = "select staffs.eid as eid, staffs.fName as fName, staffs.lName as lName
+                        $sqlDentist = "select staffs.eid as eid, staffs.fName as fName, staffs.lName as lName
                     from staffs, dentists, worksIn
                     where staffs.eid = dentists.eid and 
                     staffs.eid = worksIn.eid and
                     worksIn.cname = '{$submit_arr['cname']}' and
                     worksIn.address = '{$submit_arr['address']}';";
-                    $select = $connection->prepare($sqlDentist);
-                    $select->execute();
-                    $dentists = array();
-                    while($row = $select->fetch(PDO::FETCH_ASSOC)){
-                        $dentists[] = array('eid' => $row['eid'], 'fName' => $row['fName'], 'lName' => $row['lName']);
-                    }
-                    if(rand(0, 4) != 0) {
-                        $dentRand = $dentists[array_rand($dentists)];
-                        $dentistFName = $dentRand['fName'];
-                        $dentistLName = $dentRand['lName'];
-                        $dentistEID = $dentRand['eid'];
-                    }
+                        $select = $connection->prepare($sqlDentist);
+                        $select->execute();
+                        $dentists = array();
+                        while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                            $dentists[] = array('eid' => $row['eid'], 'fName' => $row['fName'], 'lName' => $row['lName']);
+                        }
+                        if (rand(0, 4) != 0) {
+                            $dentRand = $dentists[array_rand($dentists)];
+                            $dentistFName = $dentRand['fName'];
+                            $dentistLName = $dentRand['lName'];
+                            $dentistEID = $dentRand['eid'];
+                        }
 //                    print_r($dentRand);
-                    if($dentistEID == "NULL") {
-                        $sql = "INSERT INTO appointments VALUES({$pid}, '{$dateTime}', 'scheduled', NULL, {$recepEID},
+                        if ($dentistEID == "NULL") {
+                            $sql = "INSERT INTO appointments VALUES({$pid}, '{$dateTime}', 'scheduled', NULL, {$recepEID},
                                 '{$submit_arr['address']}', '{$submit_arr['cname']}');";
 //                        echo $sql;
-                    }
-                    else{
-                        $sql = "INSERT INTO appointments VALUES({$pid}, '{$dateTime}', 'scheduled', {$dentistEID}, {$recepEID},
+                        } else {
+                            $sql = "INSERT INTO appointments VALUES({$pid}, '{$dateTime}', 'scheduled', {$dentistEID}, {$recepEID},
                                 '{$submit_arr['address']}', '{$submit_arr['cname']}');";
 //                        echo $sql;
-                    }
-                    echo
-                    $connection->exec($sql);
-                    $succ_msg = "You have booked your appointment at {$submit_arr['cname']} at {$dateTime}. Our receptionist {$recepFName}
+                        }
+                        $connection->exec($sql);
+                        $succ_msg = "You have booked your appointment at {$submit_arr['cname']} at {$dateTime}. Our receptionist {$recepFName}
                      {$recepLName} scheduled your appointment. Your dentist will be {$dentistFName} {$dentistLName}. See you soon!";
+                    }
                 }
             }
 
@@ -209,7 +216,7 @@ if (isset($_POST["submit"])) {
         <label for="time">Time: </label>
         <input type="time" name="time"><span class="error"><?php echo $err_arr["time"] ?></span>
     </fieldset>
-    <input type="submit" name="submit" value="SUBMIT">
+    <input type="submit" name="submit" value="ADD">
 </form>
 <a href="homeMain.php">Go home.</a>
 <?php include "footerMain.php"; ?>

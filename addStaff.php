@@ -112,7 +112,7 @@ if (isset($_POST["submit"])) {
         <option value="other" selected>Other</option>
     </select><br>
     </fieldset>
-    <input type="submit" name="submit" value="SUBMIT">
+    <input type="submit" name="submit" value="ADD">
 </form>
 <a href="homeMain.php">Go home.</a>
 <?php include "footerMain.php"; ?>
